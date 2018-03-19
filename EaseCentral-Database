@@ -10,11 +10,7 @@
 -- - Show the % of people that have multiple addresses
 
 -- This is not a hosted solution. You do not have to create the database specifically. Just show the schema and SQL queries
--- from standard relational SQL databases like mysql or postgresql.
-
--- Let me know if you have any questions.
-
--- ______________________________________________________________________________________________
+-- from standard relational SQL databases like mysql or postgresql. ______________________________________________________________________________________________
 
 
 CREATE TABLE phones(id SERIAL PRIMARY KEY, number VARCHAR(10), p_id INTEGER REFERENCES people);

@@ -6,9 +6,3 @@ star
 sore
 rose
 pot
-opt
-hello
-ribd
-eros
-opp
-pot
