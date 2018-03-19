@@ -36,7 +36,7 @@ class SortAnagrams
         // Read in .txt file.
         string[] words = System.IO.File.ReadAllLines(@"text.txt");
 
-        // Loop through each word in the arrayList.
+        // Loop through each word
         foreach (string word in words)
         {
             // Make the string into a char array so that it can be sorted.
