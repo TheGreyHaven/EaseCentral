@@ -1,0 +1,89 @@
+-- Part Two Database Project:
+-- Goal is to keep track of people who have multiple addresses and multiple phone numbers
+
+-- Please create a relational database schema and show examples of the following queries:
+
+-- - Display people and their phone numbers
+-- - Display people and their addresses
+-- - Display people and their addresses only if they are in the state of California
+-- - Show how many people have addresses in each state
+-- - Show the % of people that have multiple addresses
+
+-- This is not a hosted solution. You do not have to create the database specifically. Just show the schema and SQL queries
+-- from standard relational SQL databases like mysql or postgresql.
+
+-- Let me know if you have any questions.
+
+-- ______________________________________________________________________________________________
+
+
+CREATE TABLE phones(id SERIAL PRIMARY KEY, number VARCHAR(10), p_id INTEGER REFERENCES people);
+
+CREATE TABLE addresses(a_id SERIAL PRIMARY KEY, street VARCHAR(20), state VARCHAR(2) NOT NULL, p_id  INTEGER REFERENCES people);
+
+CREATE TABLE people(p_id SERIAL PRIMARY KEY, postgres(name VARCHAR(100) NOT NULL);
+
+
+-- 1) Display people and their phone numbers:
+	-- (Here I am selecting all people regardless of weather or not they have a number. If we only want people who have a number we can just do JOIN instead of Left JOIN)
+SELECT
+	people.name,
+	phones.number
+FROM people
+LEFT JOIN phones
+USING (p_id);
+
+
+-- 2) Display people and their addresses:
+	-- (Here I am selecting all people regardless of weather or not they have an addresses. If we only want people who have an address we can just do JOIN instead of Left JOIN)
+SELECT
+	people.name,
+	addresses.street,
+	addresses.state
+FROM people
+LEFT JOIN addresses
+USING (p_id);
+
+
+-- 3) Display people and their addresses only if they are in the state of California:
+SELECT
+	people.name,
+	addresses.street,
+	addresses.state
+FROM people
+JOIN addresses
+USING (p_id)
+WHERE addresses.state='CA';
+
+
+-- 4) Show how many people have addresses in each state:
+SELECT
+	state,
+	COUNT(*)
+FROM addresses
+GROUP BY state;
+
+
+-- 5) Show the % of people that have multiple addresses:
+SELECT
+(
+	(
+		(
+			SELECT
+				SUM(total)
+			FROM
+			(
+				SELECT
+					COUNT(DISTINCT p_id) AS total
+				FROM addresses
+				GROUP BY p_id
+				HAVING COUNT(a_id) > 1
+			) AS find_total
+		)
+		/ COUNT(DISTINCT people.p_id)::decimal
+	) * 100
+)::decimal(5)
+FROM people
+LEFT JOIN addresses
+USING (p_id);
+
